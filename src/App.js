@@ -1,28 +1,29 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Fragment } from "react";
+import styled from "styled-components";
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
-    );
-  }
-}
+import Auth from "./Auth";
+import { Router } from "@reach/router";
+
+import Home from 'pages/Home';
+
+const SiteWrapper = styled("div")`
+  padding: 16px;
+`;
+
+const App = () => (
+  <Auth>
+    {({ user, movies }) => (
+      <Fragment>
+        <SiteWrapper>
+          <Router>
+            <Home user={user} movies={movies} path="/" />
+            {/* <Dash user={user} path="/dash" />
+            <AddBookmark user={user} path="/add-bookmark" /> */}
+          </Router>
+        </SiteWrapper>
+      </Fragment>
+    )}
+  </Auth>
+);
 
 export default App;
