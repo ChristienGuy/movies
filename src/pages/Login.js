@@ -41,6 +41,7 @@ const LoginPage = () => {
         .doc(user.uid)
         .set({
           email: user.email,
+          movies,
         });
     }
   };

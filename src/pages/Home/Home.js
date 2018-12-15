@@ -1,7 +1,10 @@
 import React, { useState } from "react";
+import styled from "styled-components";
+
 import { FilterMenu } from "./components/FilterMenu";
 import { MoviesList } from "./components/MoviesList";
-import styled from "styled-components";
+import { firestore } from "firebaseConfig";
+import useMovies from "../../useMovies";
 
 const Wrapper = styled.div`
   display: flex;
@@ -19,18 +22,11 @@ const MovieListSection = styled.div`
   height: 100%;
 `;
 
-const Home = ({ moviesData = [] }) => {
-  const [movies, setMovies] = useState(moviesData);
+const Home = ({ user }) => {
+  const [movies, markAsWatched] = useMovies(user.uid);
   const [filter, setFilter] = useState("all");
 
-  const updateMovies = movie => {
-    const { id } = movie;
-    const newMovies = movies.map(
-      movie => (movie.id === id ? { ...movie, watched: !movie.watched } : movie)
-    );
 
-    setMovies(newMovies);
-  };
 
   const filteredSortedMovies = movies
     .filter(movie => {
@@ -46,7 +42,7 @@ const Home = ({ moviesData = [] }) => {
         <FilterMenu onFilter={filter => setFilter(filter)} />
       </MenuWrapper>
       <MovieListSection>
-        <MoviesList movies={filteredSortedMovies} onChecked={updateMovies} />
+        <MoviesList movies={filteredSortedMovies} onChecked={markAsWatched} />
       </MovieListSection>
     </Wrapper>
   );

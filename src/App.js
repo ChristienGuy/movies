@@ -1,29 +1,24 @@
-import React, { Fragment } from "react";
-import styled from "styled-components";
-
-import Auth from "./Auth";
+import React from "react";
 import { Router } from "@reach/router";
 
-import Home from 'pages/Home';
+import Home from "pages/Home";
+import useAuth from "./useAuth";
 
-const SiteWrapper = styled("div")`
-  padding: 16px;
-`;
+// TODO: update to use a hook instead of a renderProp
+const App = () => {
+  const user = useAuth();
+  console.log(user);
 
-const App = () => (
-  <Auth>
-    {({ user, movies }) => (
-      <Fragment>
-        <SiteWrapper>
-          <Router>
-            <Home user={user} movies={movies} path="/" />
-            {/* <Dash user={user} path="/dash" />
-            <AddBookmark user={user} path="/add-bookmark" /> */}
-          </Router>
-        </SiteWrapper>
-      </Fragment>
-    )}
-  </Auth>
-);
+
+  if(user === null) {
+    return <p>Loading...</p>;
+  }
+
+  return (
+    <Router>
+      <Home user={user} path="/" />
+    </Router>
+  );
+};
 
 export default App;
