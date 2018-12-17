@@ -8,8 +8,6 @@ import Login from 'pages/Login';
 // TODO: update to use a hook instead of a renderProp
 const App = () => {
   const [user, authState] = useAuth();
-  console.log(authState);
-
 
   if(authState === 'loading') {
     return <p>Loading...</p>;
