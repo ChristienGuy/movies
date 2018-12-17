@@ -8,6 +8,7 @@ function useMovies(userId) {
     firestore
       .collection("users")
       .doc(userId)
+      .collection('movies')
       .get()
       .then(doc => {
         console.log(doc);

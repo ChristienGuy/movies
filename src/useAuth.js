@@ -9,13 +9,16 @@ const AuthState = {
 
 function useAuth() {
   const [user, setUser] = useState(null);
+  const [authState, setAuthState] = useState(AuthState.LOADING);
 
   useEffect(() => {
     const unsubscribeAuthStateChange = auth.onAuthStateChanged(user => {
       if (user) {
         setUser(user);
+        setAuthState(AuthState.AUTHENTICATED)
       } else {
         setUser(user);
+        setAuthState(AuthState.NOT_AUTHENTICATED)
       }
     });
 
@@ -24,7 +27,7 @@ function useAuth() {
     };
   }, []);
 
-  return user;
+  return [user, authState];
 }
 
 export default useAuth;

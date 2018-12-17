@@ -29,19 +29,10 @@ const LoginPage = () => {
     if (user) {
       console.log("USER", user);
 
-      const { docs } = await db.collection("movies").get();
-
-      // TODO: Only set movies if the user is new
-      const movies = [];
-      docs.forEach(movie => {
-        movies.push(movie.data());
-      });
-
       db.collection("users")
         .doc(user.uid)
         .set({
           email: user.email,
-          movies,
         });
     }
   };

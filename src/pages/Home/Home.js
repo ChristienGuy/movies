@@ -26,8 +26,6 @@ const Home = ({ user }) => {
   const [movies, markAsWatched] = useMovies(user.uid);
   const [filter, setFilter] = useState("all");
 
-
-
   const filteredSortedMovies = movies
     .filter(movie => {
       if (filter === "unwatched") return !movie.watched;

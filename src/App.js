@@ -3,15 +3,20 @@ import { Router } from "@reach/router";
 
 import Home from "pages/Home";
 import useAuth from "./useAuth";
+import Login from 'pages/Login';
 
 // TODO: update to use a hook instead of a renderProp
 const App = () => {
-  const user = useAuth();
-  console.log(user);
+  const [user, authState] = useAuth();
+  console.log(authState);
 
 
-  if(user === null) {
+  if(authState === 'loading') {
     return <p>Loading...</p>;
+  }
+
+  if(authState === 'not-authenticated') {
+    return <Login />
   }
 
   return (
