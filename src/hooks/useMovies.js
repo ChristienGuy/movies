@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { firestore } from "./firebaseConfig";
+import { firestore } from "firebaseConfig";
 
 function useMovies(userId) {
   const userMoviesRef = firestore
@@ -10,13 +10,12 @@ function useMovies(userId) {
   const [movies, setMovies] = useState([]);
 
   useEffect(() => {
-    // TODO: get user specific movies, merge together with all movies
     const moviesRef = firestore.collection("movies");
-    // const userMoviesRef = firestore
-    //   .collection("users")
-    //   .doc(userId)
-    //   .collection("movies");
 
+    // FIXME: currently we could end up getting every single movie twice
+    // once for the allMovies list and once for the userMovies list.
+    // We should look to request all user movies, then request only other movies
+    // which aren't in the users list.
     Promise.all([
       userMoviesRef.get().then(({ docs }) => {
         const userMovies = {};
