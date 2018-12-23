@@ -20,7 +20,7 @@ const Text = styled.span`
 `;
 
 const MovieItem = ({ movie, onChecked, style }) => {
-  const { id, text, watched } = movie;
+  const { text, watched } = movie;
   return (
     <Label style={style}>
       <HiddenInput

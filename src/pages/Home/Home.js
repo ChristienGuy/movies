@@ -15,6 +15,13 @@ const Wrapper = styled.div`
 
 const MenuWrapper = styled.div`
   padding: 16px;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  background: white;
+  box-shadow: -2px -1px 6px rgba(0,0,0,.18);
 `;
 
 const MovieListSection = styled.div`
@@ -30,7 +37,7 @@ const SearchInput = styled.input`
 const Home = ({ user }) => {
   const [movies, markAsWatched] = useMovies(user.uid);
   const [filter, setFilter] = useState("all");
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
 
   const filteredSortedMovies = movies
     .filter(movie => {
@@ -38,14 +45,20 @@ const Home = ({ user }) => {
       if (filter === "watched") return movie.watched;
       return true;
     })
-    .filter(movie => movie.text.toLowerCase().includes(searchTerm.toLowerCase()))
+    .filter(movie =>
+      movie.text.toLowerCase().includes(searchTerm.toLowerCase())
+    )
     .sort((a, b) => a.id - b.id);
 
   return (
     <Wrapper>
       <MenuWrapper>
         <FilterMenu onFilter={filter => setFilter(filter)} />
-        <SearchInput value={searchTerm} onChange={e => setSearchTerm(e.target.value)} type="text"/>
+        <SearchInput
+          value={searchTerm}
+          onChange={e => setSearchTerm(e.target.value)}
+          type="text"
+        />
       </MenuWrapper>
       <MovieListSection>
         <MoviesList movies={filteredSortedMovies} onChecked={markAsWatched} />

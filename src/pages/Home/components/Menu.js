@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 
 const Wrapper = styled.div`
@@ -13,10 +13,11 @@ const Button = styled.button`
 `;
 
 const Popup = styled.div`
-  position: absolute;
+  position: fixed;
   background: white;
   left: 0;
   top: 0;
+  bottom: 0;
   width: 100%;
   z-index: 100;
 
@@ -24,22 +25,51 @@ const Popup = styled.div`
   flex-direction: column;
 
   padding: 16px;
+  padding-top: 48px;
   border: 1px solid #ebebeb;
   box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.08);
 `;
 
+const CloseButton = styled.button`
+  position: absolute;
+  top: 16px;
+  right: 16px;
+`;
+
 const ItemButton = styled.button`
   background-color: transparent;
-  padding: 12px 16px;
+  padding: 16px 16px;
   margin-bottom: 16px;
+  border: 1px solid #efefef;
+  border-radius: 5px;
 
-  &:last-of-type { 
+  font-size: 1rem;
+
+  &:last-of-type {
     margin-bottom: 0;
   }
 `;
 
 const Menu = ({ buttonText, items, onItemClick }) => {
   const [isOpen, setIsOpen] = useState(false);
+
+  const wrapperRef = React.createRef();
+
+  const closeMenuOnOutsideClick = event => {
+    console.log(event);
+    console.log(wrapperRef);
+
+    if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
+      setIsOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("click", closeMenuOnOutsideClick);
+    return () => {
+      document.removeEventListener("click", closeMenuOnOutsideClick);
+    };
+  });
 
   return (
     <Wrapper>
@@ -51,9 +81,14 @@ const Menu = ({ buttonText, items, onItemClick }) => {
         {buttonText}
       </Button>
       {isOpen && (
-        <Popup>
+        <Popup ref={wrapperRef}>
+          <CloseButton onClick={() => {setIsOpen(false)}}>
+            Close
+          </CloseButton>
           {items.map(({ name, value }) => (
-            <ItemButton onClick={() => onItemClick(value)}>{name}</ItemButton>
+            <ItemButton key={value} onClick={() => onItemClick(value)}>
+              {name}
+            </ItemButton>
           ))}
         </Popup>
       )}
