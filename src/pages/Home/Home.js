@@ -13,8 +13,12 @@ const Wrapper = styled.div`
   height: 100vh;
 `;
 
-const MenuWrapper = styled.div`
+const FilterWrapper = styled.div`
+  z-index: 1;
   padding: 16px;
+
+  display: flex;
+  flex-direction: row;
   position: fixed;
   bottom: 0;
   left: 0;
@@ -52,14 +56,14 @@ const Home = ({ user }) => {
 
   return (
     <Wrapper>
-      <MenuWrapper>
+      <FilterWrapper>
         <FilterMenu onFilter={filter => setFilter(filter)} />
         <SearchInput
           value={searchTerm}
           onChange={e => setSearchTerm(e.target.value)}
           type="text"
         />
-      </MenuWrapper>
+      </FilterWrapper>
       <MovieListSection>
         <MoviesList movies={filteredSortedMovies} onChecked={markAsWatched} />
       </MovieListSection>
