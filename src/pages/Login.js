@@ -27,8 +27,6 @@ const LoginPage = () => {
     const { user } = await auth.signInWithPopup(googleProvider);
 
     if (user) {
-      console.log("USER", user);
-
       db.collection("users")
         .doc(user.uid)
         .set({

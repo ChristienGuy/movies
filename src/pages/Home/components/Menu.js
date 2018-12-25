@@ -56,9 +56,6 @@ const Menu = ({ buttonText, items, onItemClick }) => {
   const wrapperRef = React.createRef();
 
   const closeMenuOnOutsideClick = event => {
-    console.log(event);
-    console.log(wrapperRef);
-
     if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
       setIsOpen(false);
     }
