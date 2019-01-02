@@ -79,11 +79,21 @@ const Menu = ({ buttonText, items, onItemClick }) => {
       </Button>
       {isOpen && (
         <Popup ref={wrapperRef}>
-          <CloseButton onClick={() => {setIsOpen(false)}}>
+          <CloseButton
+            onClick={() => {
+              setIsOpen(false);
+            }}
+          >
             Close
           </CloseButton>
           {items.map(({ name, value }) => (
-            <ItemButton key={value} onClick={() => onItemClick(value)}>
+            <ItemButton
+              key={value}
+              onClick={() => {
+                onItemClick(value);
+                setIsOpen(false);
+              }}
+            >
               {name}
             </ItemButton>
           ))}

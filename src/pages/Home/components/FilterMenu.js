@@ -16,8 +16,13 @@ const filtersList = [
   }
 ];
 
-const FilterMenu = ({ onFilter }) => (
-  <Menu buttonText="Filters" items={filtersList} onItemClick={onFilter} />
+const FilterMenu = ({ onFilter, className }) => (
+  <Menu
+    buttonText="Filters"
+    items={filtersList}
+    onItemClick={onFilter}
+    className={className}
+  />
 );
 
 export { FilterMenu };

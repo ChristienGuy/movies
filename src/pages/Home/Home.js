@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 
+import useMovies from "hooks/useMovies";
 import { FilterMenu } from "./components/FilterMenu";
 import { MoviesList } from "./components/MoviesList";
-import useMovies from "hooks/useMovies";
 
 const Wrapper = styled.div`
   display: flex;
@@ -11,6 +11,7 @@ const Wrapper = styled.div`
 
   width: 100vw;
   height: 100vh;
+  padding-top: 82px;
 `;
 
 const FilterWrapper = styled.div`
@@ -20,12 +21,13 @@ const FilterWrapper = styled.div`
   display: flex;
   flex-direction: row;
   position: fixed;
-  bottom: 0;
+
+  top: 0;
   left: 0;
   right: 0;
 
   background: white;
-  box-shadow: -2px -1px 6px rgba(0,0,0,.18);
+  box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.18);
 `;
 
 const MovieListSection = styled.div`
@@ -35,7 +37,13 @@ const MovieListSection = styled.div`
 const SearchInput = styled.input`
   border: 1px solid #ebebeb;
   border-radius: 5px;
-  padding: 16px;
+  padding: 12px 16px;
+  width: 100%;
+  margin-right: 8px;
+`;
+
+const FilterMenuStyled = styled(FilterMenu)`
+  margin-right: 8px;
 `;
 
 const Home = ({ user }) => {
@@ -57,12 +65,12 @@ const Home = ({ user }) => {
   return (
     <Wrapper>
       <FilterWrapper>
-        <FilterMenu onFilter={filter => setFilter(filter)} />
         <SearchInput
           value={searchTerm}
           onChange={e => setSearchTerm(e.target.value)}
           type="text"
         />
+        <FilterMenuStyled onFilter={filter => setFilter(filter)} />
       </FilterWrapper>
       <MovieListSection>
         <MoviesList movies={filteredSortedMovies} onChecked={markAsWatched} />
